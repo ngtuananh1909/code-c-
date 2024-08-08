@@ -16,7 +16,7 @@ int n,m;
 
 bool check(int i,int f,int i_new,int f_new,int n,int m,vector<vector<int>>& a,vector<vector<bool>>& used)
 {
-    return a[i][f]=a[i_new][f_new] && i>0 && f>0 && i<=n && f<=m && !used[i_new][f_new];
+    return i_new>0 && f_new>0 && i_new<=n && f_new<=m && !used[i_new][f_new] && a[i][f]==a[i_new][f_new];
 }
 
 void bfs (int i,int f,vector<vector<int>>& a,vector<vector<bool>>& used)
@@ -29,10 +29,11 @@ void bfs (int i,int f,vector<vector<int>>& a,vector<vector<bool>>& used)
     while (!pq.empty())
     {
         int u=pq.front().first,v=pq.front().second;
-        for (int i=0;i<4;i++)
+        pq.pop();
+        for (int z=0;z<4;z++)
         {
-            int x_new=a+x[i];
-            int y_new=a+y[i];
+            int x_new=i+x[z];
+            int y_new=f+y[z];
             if (check(u,v,x_new,y_new,n,m,a,used))
             {
                 used[x_new][y_new]=true;
