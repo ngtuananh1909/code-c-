@@ -14,6 +14,10 @@ void input()
 
 int n,m; 
 
+vector<int> x={-1,1,0,0};
+vector<int> y={0,0,1,-1};
+vector <vector<bool>> check_idx(2500+1,vector<bool> (2500+1,false));
+
 bool check(int i,int f,int i_new,int f_new,int n,int m,vector<vector<int>>& a,vector<vector<bool>>& used)
 {
     return i_new>0 && f_new>0 && i_new<=n && f_new<=m && !used[i_new][f_new] && a[i][f]==a[i_new][f_new];
@@ -21,19 +25,18 @@ bool check(int i,int f,int i_new,int f_new,int n,int m,vector<vector<int>>& a,ve
 
 void bfs (int i,int f,vector<vector<int>>& a,vector<vector<bool>>& used)
 {
-    vector<int> x={-1,1,0,0};
-    vector<int> y={0,0,1,-1};
 
     queue<pair<int,int>> pq;
     pq.push({i,f});
+    used[i][f]=true;
     while (!pq.empty())
     {
         int u=pq.front().first,v=pq.front().second;
         pq.pop();
         for (int z=0;z<4;z++)
         {
-            int x_new=i+x[z];
-            int y_new=f+y[z];
+            int x_new=u+x[z];
+            int y_new=v+y[z];
             if (check(u,v,x_new,y_new,n,m,a,used))
             {
                 used[x_new][y_new]=true;
@@ -43,6 +46,7 @@ void bfs (int i,int f,vector<vector<int>>& a,vector<vector<bool>>& used)
     }
     return ;
 }
+
 
 PRO_NHI_PHONG_TIN
 {
@@ -57,7 +61,6 @@ PRO_NHI_PHONG_TIN
         }
     }
     int res=0;
-    vector <vector<bool>> check_idx(n+1,vector<bool> (m+1,false));
     for (int i=1;i<=n;i++)
     {
         for (int f=1;f<=m;f++)
