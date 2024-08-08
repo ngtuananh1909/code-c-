@@ -15,6 +15,16 @@ void input()
 PRO_NHI_PHONG_TIN
 {
     input();
-    int n=5; cout<<n;
+    int n,q; cin>>n>>q;
+    vector<int> check(n+1,0);
+    while (q--)
+    {
+        int x,y; cin>>x>>y;
+        for (int i=x;i<=y;i++)
+        {
+            check[i]=abs(check[i]-1);
+        }
+    }
+    for (int i=1;i<=n;i++) cout<<check[i]<<" ";
     return 0;
 }
