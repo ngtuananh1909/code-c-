@@ -15,6 +15,6 @@ void input()
 PRO_NHI_PHONG_TIN
 {
     input();
-    int n=5; cout<<n;
+    
     return 0;
 }
