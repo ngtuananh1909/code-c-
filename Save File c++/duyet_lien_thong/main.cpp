@@ -51,9 +51,6 @@ void bfs (int i,int f,vector<vector<int>>& a,vector<vector<bool>>& used)
 PRO_NHI_PHONG_TIN
 {
     input();
-<<<<<<< HEAD
-    
-=======
     cin>>n>>m;
     vector<vector<int>> a(n+1,vector<int>(m+1));
     for (int i=1;i<=n;i++)
@@ -76,6 +73,5 @@ PRO_NHI_PHONG_TIN
         }
     }
     cout<<res;
->>>>>>> do_c++
     return 0;
 }
