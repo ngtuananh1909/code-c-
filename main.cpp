@@ -1,77 +1,57 @@
 #include <bits/stdc++.h>
-#define sync ios_base::sync_with_stdio(false); cin.tie(0);cout.tie(0);
-#define text "main"
+#define test "main"
+#define endl '\n'
+#define PRO_NHI_PHONG_TIN int main()
+#define sync ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 using namespace std;
-
+const int MAXN = 1e5 + 5;
 void input()
 {
     sync;
-    freopen(text".inp","r",stdin);
-    freopen(text".out","w",stdout);
+    freopen(test".inp","r",stdin);
+    freopen(test".out","w",stdout);
 }
 
-bool check(string& s)
+int n,k; 
+vector<int> tree(4*MAXN);
+vector<int> a(MAXN);
+
+void build(int idx,int l,int r)
 {
-    int i=0,f=s.size()-1;
-    while (i<f)
+    if (l==r)
     {
-        if (s[i]!=s[f])
-        {
-            return false;
-        }
-        i++;
-        f--;
+        tree[idx]=a[l];
+        return ;
     }
-    return true;
+    int mid=l+r>>1;
+    build(idx*2,l,mid);
+    build(idx*2+1,mid+1,r);
+    tree[idx]=min(tree[idx*2],tree[idx*2+1]);
+    return ;
 }
 
-int longestPalindromeSubstring(const string& s) {
-    int n = s.length();
-    if (n == 0) return 0;
-
-    vector<vector<bool>> dp(n, vector<bool>(n, false));
-    int maxLength = 1;
-    for (int i = 0; i < n; i++) {
-        dp[i][i] = true;
-    }
-
-    int start = 0;
-    for (int i = 0; i < n - 1; i++) {
-        if (s[i] == s[i + 1]) {
-            dp[i][i + 1] = true;
-            start = i;
-            maxLength = 2;
-        }
-    }
-    for (int length = 3; length <= n; length++) {
-        for (int i = 0; i < n - length + 1; i++) {
-            int j = i + length - 1;
-            if (s[i] == s[j] && dp[i + 1][j - 1]) {
-                dp[i][j] = true;
-
-                if (length > maxLength) {
-                    start = i;
-                    maxLength = length;
-                }
-            }
-        }
-    }
-
-    return maxLength;
+int get(int idx,int l,int r,int u,int v)
+{
+    if (u>r || v<l) return INT_MAX;
+    else if (u<=l && v>=r) return tree[idx];
+    int mid =l+r>>1;
+    return min(get(idx*2,l,mid,u,v),get(idx*2+1,mid+1,r,u,v));
 }
 
-int main()
+PRO_NHI_PHONG_TIN
 {
     input();
-    string s; cin>>s;
-    // for (int i=0;i<s.size()-1;i++)
-    // {
-    //     for (int f=i+1;f<s.size();f++)
-    //     {
-
-    //     }
-    // }
-    cout<<longestPalindromeSubstring(s);
+    cin>>n>>k;
+    for (int i=1;i<=n;i++)
+    {
+        cin>>a[i];
+    }
+    build(1,1,n);
+    for (int i=k;i<=n;i++)
+    {
+        int u=i-k+1;
+        int v=i;
+        cout<<get(1,1,n,u,v)<<endl;
+    }
     return 0;
 }
-
