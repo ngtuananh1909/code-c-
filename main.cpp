@@ -1,19 +1,17 @@
 #include <bits/stdc++.h>
-#define sync ios_base::sync_with_stdio(false); cin.tie(0);cout.tie(0);
-#define text "main"
+#define sync ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define open "main"
+#define Tuananh signed main
 using namespace std;
 
-void input()
-{
+void input() {
     sync;
-    freopen(text".inp","r",stdin);
-    freopen(text".out","w",stdout);
+    freopen(open ".inp", "r", stdin);
+    freopen(open ".out", "w", stdout);
 }
 
-int main()
-{
+Tuananh() {
     input();
     
     return 0;
 }
-
