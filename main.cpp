@@ -1,55 +1,54 @@
 #include <bits/stdc++.h>
-#define sync ios_base::sync_with_stdio(false); cin.tie(0);cout.tie(0);
-#define text "main"
+#define sync ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define text "MAIN"
 using namespace std;
 
 void input()
 {
     sync;
-    freopen(text".inp","r",stdin);
-    freopen(text".out","w",stdout);
-}
-
-bool pali(int& n)
-{
-    string s=to_string(n);
-    string test=string(s.rbegin(),s.rend());
-    return test==s;
-}
-
-set<int> count(int& n)
-{
-    set<int> save;
-    while (n%2==0)
-    {
-        save.insert(2);
-        n/=2;
-    }
-    for (int i=3;i*i<=n;i+=2)
-    {
-        while(n%i==0)
-        {
-            save.insert(i);
-            n/=i;
-        }
-    }
-    if (n>2) save.insert(n);
-    return save;
+    freopen(text".inp", "r", stdin);
+    freopen(text".out", "w", stdout);
 }
 
 int main()
 {
     input();
-    int a,b,res=0; cin>>a>>b;
-    for (int i=66;i<=b;i++)
-    {
-        if (pali(i))
-        {
-            set<int> tmp=count(i);
-            if (tmp.size()>=3) res++;
-        }
+    int n; 
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
     }
-    cout<<res;
+
+    int res = 0;
+    int count1 = 0, count0 = 0;
+
+    // Sử dụng một map để lưu trữ số lượng cặp
+    unordered_map<int, int> countMap;
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 1) {
+            count1++;
+        } else {
+            count0++;
+        }
+
+        // Nếu số lượng 1 và 0 bằng nhau, chúng ta có thể tạo ra một cặp
+        if (count1 == count0) {
+            res++;
+        }
+
+        // Lưu trữ số lượng 1 và 0 vào map
+        countMap[count1 - count0]++;
+    }
+
+    // Đếm các cặp từ map
+    for (const auto& pair : countMap) {
+        int count = pair.second;
+        // Nếu có count cách chọn, số cặp là count * (count - 1) / 2
+        res += (count * (count - 1)) / 2;
+    }
+
+    cout << res;
     return 0;
 }
-
